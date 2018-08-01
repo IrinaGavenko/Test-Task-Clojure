@@ -11,7 +11,7 @@
 (comment (core/my-frequencies [1 1 2 1 3 4 2 2 3])
          (core/my-frequencies '(1 1 2 3 1 2 3)))
 
-(deftest get-domen
+(deftest get-domain
   (are [result link]
     (= result (core/get-domain link))
     "lenta.ru" "http://lenta.ru/photo/2012/11/28/lis/"
