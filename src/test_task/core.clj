@@ -1,6 +1,22 @@
+(require '[clojure.string :as str])
+
 (ns test-task.core)
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+(defn get-domain
+  [link]
+  (nth (str/split link #"/") 2))
+
+(defn my-frequencies
+  [coll]
+  (reduce
+    #(update %1 %2 (fnil inc 0))
+    {}
+    coll))
+
+(defn get-statistics
+  [coll]
+  (->>
+    coll
+    (set)
+    (map get-domain)
+    frequencies))
