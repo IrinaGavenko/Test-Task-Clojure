@@ -10,3 +10,37 @@
 
 (comment (core/my-frequencies [1 1 2 1 3 4 2 2 3])
          (core/my-frequencies '(1 1 2 3 1 2 3)))
+
+(deftest get-domain
+  (are [result link]
+    (= result (core/get-domain link))
+    "lenta.ru" "http://lenta.ru/photo/2012/11/28/lis/"
+    "cursive-ide.com" "https://cursive-ide.com/userguide/testing.html"))
+
+(deftest get-statistics
+  (are [result coll]
+    (= result (core/get-statistics coll))
+    {"first" 1} ["https://first/first"
+                 "https://first/first"
+                 "https://first/first"]
+    {"second" 2} ["https://second/first"
+                  "https://second/first"
+                  "https://second/second"]
+    {"first" 1, "second" 2, "third" 3} ["https://first/first"
+                                        "https://first/first"
+                                        "https://first/first"
+                                        "https://second/first"
+                                        "https://second/first"
+                                        "https://second/second"
+                                        "https://third/first"
+                                        "https://third/second"
+                                        "https://third/third"]
+    {"first" 1, "second" 2, "third" 3} ["https://first/first"
+                                        "https://second/second"
+                                        "https://third/second"
+                                        "https://second/first"
+                                        "https://third/third"
+                                        "https://first/first"
+                                        "https://third/first"
+                                        "https://first/first"
+                                        "https://second/first"]))
