@@ -44,3 +44,23 @@
                                         "https://third/first"
                                         "https://first/first"
                                         "https://second/first"]))
+
+(deftest get-full-address
+  (are [result query]
+    (= result (core/get-full-address query))
+    "https://www.bing.com/search?q=scala&format=rss&count=10" "scala"
+    "https://www.bing.com/search?q=clojure&format=rss&count=10" "clojure"
+    "https://www.bing.com/search?q=something&format=rss&count=10" "something"))
+
+;; возращает success-status
+(comment (defn get-xml-test
+   [address]
+   (let [{:keys [status headers body error] :as resp} @(http/get address)]
+     (if error
+       (println "Failed, exception: " error)
+       (println "HTTP GET success: " status))))
+
+  (get-xml-test "https://www.bing.com/search?q=scala&format=rss&count=10"))
+
+(comment (core/get-links "scala"))
+(comment (core/fetch-query ["scala" "clojure" "something"]))
