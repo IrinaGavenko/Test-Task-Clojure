@@ -34,8 +34,6 @@
   [query]
   (str "https://www.bing.com/search?q=" query "&format=rss&count=1"))
 
-
-;; ИСПРАВИТЬ -- НЕ НА ВСЕХ XML ОТРАБОТАЕТ КОРРЕКТНО
 (defn links-in-xml
   [s]
   (str/starts-with? s "http"))
