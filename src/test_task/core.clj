@@ -29,22 +29,23 @@
     frequencies))
 
 (defn concat-query
-  "Для запроса по нескольким словам"
+  "Вставляет слово в форму запроса"
   [s]
   (str "q=" s "&"))
 
-(concat-query "aaa")
-
-;; ИСПРАВИТЬ: ЕСТЬ ОШИБКА В reduce
-(defn get-adress
+;; ИСПРАВИТЬ: ЕСТЬ ОШИБКА В (reduce)
+(defn get-full-query
+  "Для запроса по нескольким словам"
   [queries]
   (reduce concat-query queries))
 
 (defn get-full-address
+  "Собирается адрес запроса"
   [query]
-  (str "https://www.bing.com/search?" (get-adress query) "format=rss&count=1"))
+  (str "https://www.bing.com/search?" (get-full-query query) "format=rss&count=1"))
 
 (defn links-in-xml
+  "Костыльная замена функции Parse"
   [s]
   (str/starts-with? s "http"))
 
