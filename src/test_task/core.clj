@@ -7,10 +7,12 @@
          '[clojure.zip :as zip])
 
 (defn get-domain
+  "Получает домен второго уровня из переданной ссылки"
   [link]
   (nth (str/split link #"/") 2))
 
 (defn my-frequencies
+  "Функция для создания частотного словаря"
   [coll]
   (reduce
     #(update %1 %2 (fnil inc 0))
@@ -18,6 +20,7 @@
     coll))
 
 (defn get-statistics
+  "Подсчет статистики по доменам второго уровня"
   [coll]
   (->>
     coll
