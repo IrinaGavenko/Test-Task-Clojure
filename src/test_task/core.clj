@@ -48,14 +48,10 @@
   [s]
   (str/starts-with? s "http"))
 
-(links-in-xml "https://aaaa")
-
-;; ИСПРАВИТЬ: ЕСТЬ ОШИБКА
 (defn parse-xml
   "Достает ссылки из переданной xml в формате String"
   [xml]
   (str/split xml #"<link>|</link>")
-  (print xml)
   (filter links-in-xml xml))
 
 (defn get-xml
