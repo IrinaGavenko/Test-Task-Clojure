@@ -48,13 +48,14 @@
 (deftest get-full-address
   (are [result query]
     (= result (core/get-full-address query))
-    "https://www.bing.com/search?q=scala&format=rss&count=10" "scala"
-    "https://www.bing.com/search?q=clojure&format=rss&count=10" "clojure"
-    "https://www.bing.com/search?q=something&format=rss&count=10" "something"))
+    "https://www.bing.com/search?q=scala&format=rss&count=10" ["scala"]
+    "https://www.bing.com/search?q=clojure&format=rss&count=10" ["clojure"]
+    "https://www.bing.com/search?q=something&format=rss&count=10" ["something"]
+    "https://www.bing.com/search?q=scala&q=clojure&format=rss&count=10" ["scala" "clojure"]))
 
 (deftest links-in-xml
   (are [result query]
-    (= result (core/links-in-xml))
+    (= result (core/links-in-xml query))
     false "aaaa"
     true "https://aaaa"))
 
