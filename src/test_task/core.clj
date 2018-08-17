@@ -28,11 +28,21 @@
     (map get-domain)
     frequencies))
 
+(defn concat-query
+  "Для запроса по нескольким словам"
+  [s]
+  (str "q=" s "&"))
 
-;; ИСПРАВИТЬ: ВХОДНЫЕ ПАРАМЕТРЫ -- МАССИВ (отдельной функцией)
+(concat-query "aaa")
+
+;; ИСПРАВИТЬ: ЕСТЬ ОШИБКА В reduce
+(defn get-adress
+  [queries]
+  (reduce concat-query queries))
+
 (defn get-full-address
   [query]
-  (str "https://www.bing.com/search?q=" query "&format=rss&count=1"))
+  (str "https://www.bing.com/search?" (get-adress query) "format=rss&count=1"))
 
 (defn links-in-xml
   [s]
