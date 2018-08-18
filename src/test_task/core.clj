@@ -51,8 +51,7 @@
 (defn parse-xml
   "Достает ссылки из переданной xml в формате String"
   [xml]
-  (str/split xml #"<link>|</link>")
-  (filter links-in-xml xml))
+  (filter links-in-xml (str/split xml #"<link>|</link>")))
 
 (defn get-xml
   [address]
@@ -60,6 +59,8 @@
     (if error
       (println "Failed, exception: " error)
       (parse-xml body))))
+
+(get-xml "https://www.bing.com/search?q=scala&format=rss&count=1")
 
 (defn get-links
   "Получает ссылки из поисковых страниц"
@@ -70,6 +71,8 @@
     ;; Синхронно идем на сервер и парсим xml
     (get-xml)
     ))
+
+;;(get-links ["scala"])
 
 (defn fetch-query
   "Возвращает спискок ссылок"
