@@ -3,8 +3,11 @@
 (require '[clojure.string :as str])
 (require '[org.httpkit.client :as http])
 
+
 (require '[clojure.xml :as xml]
          '[clojure.zip :as zip])
+
+(require '[clojure.data.xml :refer :all])
 
 (defn get-domain
   "Получает домен второго уровня из переданной ссылки"
@@ -51,16 +54,16 @@
 (defn parse-xml
   "Достает ссылки из переданной xml в формате String"
   [xml]
-  (filter links-in-xml (str/split xml #"<link>|</link>")))
+  (for [x (xml-seq (parse-str xml :coalescing false))
+        :when (= :link (:tag x))] (first (:content x))))
 
 (defn get-xml
   [address]
   (let [{:keys [status headers body error] :as resp} @(http/get address)]
     (if error
       (println "Failed, exception: " error)
+      ;;(parse-xml body)
       (parse-xml body))))
-
-(get-xml "https://www.bing.com/search?q=scala&format=rss&count=1")
 
 (defn get-links
   "Получает ссылки из поисковых страниц"
@@ -71,8 +74,6 @@
     ;; Синхронно идем на сервер и парсим xml
     (get-xml)
     ))
-
-;;(get-links ["scala"])
 
 (defn fetch-query
   "Возвращает спискок ссылок"

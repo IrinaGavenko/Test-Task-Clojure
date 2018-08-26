@@ -59,6 +59,12 @@
     false "aaaa"
     true "https://aaaa"))
 
+(deftest parse-xml
+  (are [result query]
+    (= result (core/parse-xml query))
+    '("SOMETHING") "<a><link>SOMETHING</link></a>"
+    '("SOMETHING") "<a><b><link>SOMETHING</link></b></a>"))
+
 ;; возращает success-status
 (comment (defn get-xml-test
    [address]
